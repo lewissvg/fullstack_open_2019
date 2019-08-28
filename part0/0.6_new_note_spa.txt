@@ -1,0 +1,8 @@
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note over server:
+This request contains the 
+new note as JSON-data
+with both note content
+and timestamp.
+end note
+server->browser: {message: "note created"}
