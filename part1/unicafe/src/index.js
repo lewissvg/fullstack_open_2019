@@ -7,6 +7,29 @@ const Button = props => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
 
+const Statistics = props => {
+  const doCalc = type => {
+    const total = props.good + props.neutral + props.bad;
+    if (type === "total") {
+      return total;
+    } else if (type === "average") {
+      return (props.good - props.bad) / total;
+    } else {
+      return (props.good / total) * 100;
+    }
+  };
+  return (
+    <p>
+      good {props.good} <br />
+      neutral {props.neutral} <br />
+      bad {props.bad} <br />
+      total {doCalc("total")} <br />
+      average {doCalc("average")} <br />
+      positive {doCalc("positive")}%
+    </p>
+  );
+};
+
 const App = () => {
   // save clicks of each button to own state
   const [good, setGood] = useState(0);
@@ -23,17 +46,6 @@ const App = () => {
     }
   };
 
-  const doCalc = type => {
-    const total = good + neutral + bad;
-    if (type === "total") {
-      return total;
-    } else if (type === "average") {
-      return (good - bad) / total;
-    } else {
-      return (good / total) * 100;
-    }
-  };
-
   return (
     <>
       <Header text="give feedback" />
@@ -44,14 +56,7 @@ const App = () => {
       />
       <Button handleClick={() => clickHandler("bad", bad + 1)} text="bad" />
       <Header text="statistics" />
-      <p>
-        good {good} <br />
-        neutral {neutral} <br />
-        bad {bad} <br />
-        total {doCalc("total")} <br />
-        average {doCalc("average")} <br />
-        positive {doCalc("positive")}%
-      </p>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </>
   );
 };
