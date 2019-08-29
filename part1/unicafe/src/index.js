@@ -8,8 +8,9 @@ const Button = props => (
 );
 
 const Statistics = props => {
+  const total = props.good + props.neutral + props.bad;
+
   const doCalc = type => {
-    const total = props.good + props.neutral + props.bad;
     if (type === "total") {
       return total;
     } else if (type === "average") {
@@ -18,16 +19,20 @@ const Statistics = props => {
       return (props.good / total) * 100;
     }
   };
-  return (
-    <p>
-      good {props.good} <br />
-      neutral {props.neutral} <br />
-      bad {props.bad} <br />
-      total {doCalc("total")} <br />
-      average {doCalc("average")} <br />
-      positive {doCalc("positive")}%
-    </p>
-  );
+  if (total > 0) {
+    return (
+      <p>
+        good {props.good} <br />
+        neutral {props.neutral} <br />
+        bad {props.bad} <br />
+        total {doCalc("total")} <br />
+        average {doCalc("average")} <br />
+        positive {doCalc("positive")}%
+      </p>
+    );
+  } else {
+    return <p>No feedback given</p>;
+  }
 };
 
 const App = () => {
