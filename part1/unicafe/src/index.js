@@ -7,6 +7,14 @@ const Button = props => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
 
+const Statistic = props => {
+  return (
+    <p>
+      {props.text} {props.value}
+    </p>
+  );
+};
+
 const Statistics = props => {
   const total = props.good + props.neutral + props.bad;
 
@@ -16,19 +24,19 @@ const Statistics = props => {
     } else if (type === "average") {
       return (props.good - props.bad) / total;
     } else {
-      return (props.good / total) * 100;
+      return (props.good / total) * 100 + "%";
     }
   };
   if (total > 0) {
     return (
-      <p>
-        good {props.good} <br />
-        neutral {props.neutral} <br />
-        bad {props.bad} <br />
-        total {doCalc("total")} <br />
-        average {doCalc("average")} <br />
-        positive {doCalc("positive")}%
-      </p>
+      <div>
+        <Statistic text="good" value={props.good} />
+        <Statistic text="neutral" value={props.neutral} />
+        <Statistic text="bad" value={props.bad} />
+        <Statistic text="total" value={doCalc("total")} />
+        <Statistic text="average" value={doCalc("average")} />
+        <Statistic text="positive" value={doCalc("positive")} />
+      </div>
     );
   } else {
     return <p>No feedback given</p>;
