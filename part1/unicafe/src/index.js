@@ -23,6 +23,17 @@ const App = () => {
     }
   };
 
+  const doCalc = type => {
+    const total = good + neutral + bad;
+    if (type === "total") {
+      return total;
+    } else if (type === "average") {
+      return (good - bad) / total;
+    } else {
+      return (good / total) * 100;
+    }
+  };
+
   return (
     <>
       <Header text="give feedback" />
@@ -37,6 +48,9 @@ const App = () => {
         good {good} <br />
         neutral {neutral} <br />
         bad {bad} <br />
+        total {doCalc("total")} <br />
+        average {doCalc("average")} <br />
+        positive {doCalc("positive")}%
       </p>
     </>
   );
