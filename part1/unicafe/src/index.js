@@ -9,9 +9,11 @@ const Button = props => (
 
 const Statistic = props => {
   return (
-    <p>
-      {props.text} {props.value}
-    </p>
+    <tr>
+      <td>
+        {props.text} {props.value}
+      </td>
+    </tr>
   );
 };
 
@@ -29,14 +31,16 @@ const Statistics = props => {
   };
   if (total > 0) {
     return (
-      <div>
-        <Statistic text="good" value={props.good} />
-        <Statistic text="neutral" value={props.neutral} />
-        <Statistic text="bad" value={props.bad} />
-        <Statistic text="total" value={doCalc("total")} />
-        <Statistic text="average" value={doCalc("average")} />
-        <Statistic text="positive" value={doCalc("positive")} />
-      </div>
+      <table>
+        <tbody>
+          <Statistic text="good" value={props.good} />
+          <Statistic text="neutral" value={props.neutral} />
+          <Statistic text="bad" value={props.bad} />
+          <Statistic text="total" value={doCalc("total")} />
+          <Statistic text="average" value={doCalc("average")} />
+          <Statistic text="positive" value={doCalc("positive")} />
+        </tbody>
+      </table>
     );
   } else {
     return <p>No feedback given</p>;
