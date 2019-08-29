@@ -3,20 +3,36 @@ import ReactDOM from "react-dom";
 
 const App = props => {
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(
+    new Array(6)
+      .join("0")
+      .split("")
+      .map(parseFloat)
+  ); //empty array of six 0's [0, 0, 0, 0, 0, 0]
 
   const randomIntFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  const handleClick = () => {
-    setSelected(randomIntFromInterval(0, 5));
+  const handleClick = name => {
+    const pos = randomIntFromInterval(0, 5);
+    const copy = [...votes];
+
+    if (name === "next") {
+      setSelected(pos);
+    } else {
+      copy[pos] += 1;
+      setVotes(copy);
+    }
   };
 
   return (
     <>
       <div>{props.anecdotes[selected]}</div>
+      has {votes[selected]} votes
       <div>
-        <button onClick={() => handleClick()}>next anecdote</button>
+        <button onClick={() => handleClick("vote")}>vote</button>
+        <button onClick={() => handleClick("next")}>next anecdote</button>
       </div>
     </>
   );
