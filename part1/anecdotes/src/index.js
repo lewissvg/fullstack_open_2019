@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 const App = props => {
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(
-    new Array(6)
+    new Array(6 + 1)
       .join("0")
       .split("")
       .map(parseFloat)
@@ -14,16 +14,16 @@ const App = props => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  const handleClick = name => {
+  const handleNext = () => {
     const pos = randomIntFromInterval(0, 5);
-    const copy = [...votes];
+    setSelected(pos);
+  };
 
-    if (name === "next") {
-      setSelected(pos);
-    } else {
-      copy[pos] += 1;
-      setVotes(copy);
-    }
+  const handleVote = () => {
+    console.log(votes);
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
   };
 
   return (
@@ -31,8 +31,8 @@ const App = props => {
       <div>{props.anecdotes[selected]}</div>
       has {votes[selected]} votes
       <div>
-        <button onClick={() => handleClick("vote")}>vote</button>
-        <button onClick={() => handleClick("next")}>next anecdote</button>
+        <button onClick={() => handleVote()}>vote</button>
+        <button onClick={() => handleNext()}>next anecdote</button>
       </div>
     </>
   );
