@@ -5,6 +5,7 @@ import Filter from "./components/Filter";
 const App = () => {
   const [filtered, setFiltered] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [showFullCountry, setShowFullCountry] = useState([]);
 
   useEffect(() => {
     axios.get("https://restcountries.eu/rest/v2/all").then(response => {
@@ -22,10 +23,22 @@ const App = () => {
     );
   };
 
+  const handleShow = e => {
+    setFiltered(
+      countries.filter(country => {
+        return country.name.includes(e.target.name);
+      })
+    );
+  };
+
   return (
     <div>
       find countries <input onChange={handleSearch} />
-      <Filter filtered={filtered} />
+      <Filter
+        filtered={filtered}
+        showPressed={handleShow}
+        showFullCountry={showFullCountry}
+      />
     </div>
   );
 };
