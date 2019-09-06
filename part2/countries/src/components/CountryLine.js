@@ -1,10 +1,10 @@
 import React from "react";
 
-const CountryLine = props => {
+const CountryLine = ({ name, country, showPressed }) => {
   return (
     <div>
-      {props.name}
-      <button name={props.country.name} onClick={props.showPressed}>
+      {name}
+      <button name={country.name} onClick={showPressed}>
         show
       </button>
     </div>
