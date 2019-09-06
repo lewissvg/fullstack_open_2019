@@ -27,9 +27,13 @@ const App = () => {
     } else if (persons.find(person => person.number === newPhone)) {
       alert(`${newPhone} already exists in the phonebook`);
     } else {
-      setPersons(persons.concat(personObject));
-      setNewName("");
-      setNewPhone("");
+      axios
+        .post("http://localhost:3001/persons", personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data));
+          setNewName("");
+          setNewPhone("");
+        });
     }
   };
 
