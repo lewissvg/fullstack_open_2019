@@ -10,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [message, setMessage] = useState(null);
+  const [error, setError] = useState(false);
 
   //get initial state from server
   useEffect(() => {
@@ -31,12 +32,21 @@ const App = () => {
         )
       ) {
         const person = persons.find(person => person.name === newName);
-        personService.update(person.id, personObject).then(() => {
-          personService.getAll().then(response => {
-            setPersons(response);
+        personService
+          .update(person.id, personObject)
+          .then(() => {
+            personService.getAll().then(response => {
+              setPersons(response);
+            });
+            setNotification(`Updated ${newName}`);
+          })
+          .catch(error => {
+            setError(true);
+            setNotification(
+              `the person '${newName}' was already deleted from server`
+            );
+            setPersons(persons.filter(n => n.name !== newName));
           });
-          setNotification(`Updated ${newName}`);
-        });
       }
     } else if (persons.find(person => person.number === newPhone)) {
       alert(`${newPhone} already exists in the phonebook`);
@@ -54,7 +64,8 @@ const App = () => {
     setMessage(message);
     setTimeout(() => {
       setMessage(null);
-    }, 3000);
+      setError(false);
+    }, 5000);
   };
 
   const handleNameChange = e => {
@@ -87,7 +98,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message} />
+      <Notification message={message} error={error} />
       <Filter handleFilterChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm
