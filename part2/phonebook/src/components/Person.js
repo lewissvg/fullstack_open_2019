@@ -1,9 +1,9 @@
 import React from "react";
 
-const Person = props => {
+const Person = ({ name, number, handleDelete }) => {
   return (
     <div>
-      {props.name} {props.number}
+      {name} {number} <button onClick={handleDelete}>delete</button>
     </div>
   );
 };

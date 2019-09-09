@@ -51,6 +51,17 @@ const App = () => {
     );
   };
 
+  const handleDelete = id => {
+    const person = persons.find(person => person.id === id);
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService.deletePerson(id).then(() => {
+        personService.getAll().then(response => {
+          setPersons(response);
+        });
+      });
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -62,7 +73,7 @@ const App = () => {
         handlePhoneChange={handlePhoneChange}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons persons={persons} handleDelete={handleDelete} />
     </div>
   );
 };
