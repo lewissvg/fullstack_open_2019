@@ -23,7 +23,18 @@ const App = () => {
       number: newPhone
     };
     if (persons.find(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(
+          `${newName} already added to phonebook, replace old number with new one?`
+        )
+      ) {
+        const person = persons.find(person => person.name === newName);
+        personService.update(person.id, personObject).then(() => {
+          personService.getAll().then(response => {
+            setPersons(response);
+          });
+        });
+      }
     } else if (persons.find(person => person.number === newPhone)) {
       alert(`${newPhone} already exists in the phonebook`);
     } else {
